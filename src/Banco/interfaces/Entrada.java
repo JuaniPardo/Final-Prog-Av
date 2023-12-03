@@ -1,6 +1,5 @@
 package Banco.interfaces;
 
-import java.util.*;
 
 public interface Entrada {
 

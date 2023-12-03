@@ -2,9 +2,6 @@ package Banco.interfaces;
 
 import java.util.Scanner;
 
-/**
- * 
- */
 public class Teclado implements Entrada {
 
     private Scanner scanner;

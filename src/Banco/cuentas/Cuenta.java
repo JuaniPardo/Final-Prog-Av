@@ -1,10 +1,5 @@
 package Banco.cuentas;
 
-import java.util.*;
-
-/**
- *
- */
 public abstract class Cuenta {
 
     private double balance;

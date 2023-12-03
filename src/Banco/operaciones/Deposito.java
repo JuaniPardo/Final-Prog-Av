@@ -3,9 +3,6 @@ package Banco.operaciones;
 import Banco.ATM.ATM;
 import Banco.cuentas.Cuenta;
 
-/**
- *
- */
 public class Deposito extends Operacion {
 
     private Cuenta cuenta;
