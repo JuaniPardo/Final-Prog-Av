@@ -42,9 +42,9 @@ public abstract class Cuenta {
 
     //Metodos
 
-    public abstract void deposito(int monto);
+    public abstract void deposito(double monto);
 
-    public abstract void extraccion(int monto);
+    public abstract void extraccion(double monto);
 
     public double consultaSaldo() {
         return getBalance();

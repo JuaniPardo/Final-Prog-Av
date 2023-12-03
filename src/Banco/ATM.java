@@ -35,11 +35,11 @@ public class ATM {
     public Entrada getEntrada() {
         return entrada;
     }
-    public void setEntrada() {
-        this.entrada = new Teclado();
-    }
     public Salida getSalida() {
         return salida;
+    }
+    public void setEntrada() {
+        this.entrada = new Teclado();
     }
     public void setSalida() {
         this.salida = new Pantalla();

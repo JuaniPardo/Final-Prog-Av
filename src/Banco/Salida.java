@@ -10,6 +10,6 @@ public interface Salida {
     /**
      * 
      */
-    public void mostrarMensaje();
+    public void mostrarMensaje(String mensaje);
 
 }

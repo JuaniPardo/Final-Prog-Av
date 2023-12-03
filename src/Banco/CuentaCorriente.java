@@ -11,14 +11,14 @@ public class CuentaCorriente extends Cuenta{
     }
 
     @Override
-    public void deposito(int monto) {
-        if (monto > 0){
+    public void deposito(double monto) {
+        if (monto > 0.0){
             setBalance(getBalance() + monto);
         }
     }
 
     @Override
-    public void extraccion(int monto) {
+    public void extraccion(double monto) {
         if (getBalance() >= monto){
             setBalance(getBalance() - monto);
         }

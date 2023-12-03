@@ -14,8 +14,8 @@ public class Pantalla implements Salida {
     /**
      * 
      */
-    public void mostrarMensaje() {
-        // TODO implement here
+    public void mostrarMensaje(String mensaje) {
+        System.out.println(mensaje);
     }
 
     /**
