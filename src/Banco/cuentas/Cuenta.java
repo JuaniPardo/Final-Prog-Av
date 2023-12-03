@@ -1,4 +1,4 @@
-package Banco;
+package Banco.cuentas;
 
 import java.util.*;
 

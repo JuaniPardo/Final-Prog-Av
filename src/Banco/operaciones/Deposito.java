@@ -1,7 +1,7 @@
-package Banco.Operaciones;
+package Banco.operaciones;
 
-import Banco.ATM;
-import Banco.Cuenta;
+import Banco.ATM.ATM;
+import Banco.cuentas.Cuenta;
 
 /**
  *

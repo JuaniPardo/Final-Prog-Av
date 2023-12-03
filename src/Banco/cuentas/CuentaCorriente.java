@@ -1,4 +1,4 @@
-package Banco;
+package Banco.cuentas;
 
 public class CuentaCorriente extends Cuenta{
 

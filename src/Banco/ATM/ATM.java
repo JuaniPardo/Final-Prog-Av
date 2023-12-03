@@ -1,8 +1,11 @@
-package Banco;
+package Banco.ATM;
 
-import Banco.Operaciones.Operacion;
-
-import java.util.Scanner;
+import Banco.interfaces.Entrada;
+import Banco.interfaces.Pantalla;
+import Banco.interfaces.Salida;
+import Banco.interfaces.Teclado;
+import Banco.operaciones.Operacion;
+import Banco.clientes.Cliente;
 
 /**
  * 

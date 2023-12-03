@@ -1,4 +1,4 @@
-package Banco;
+package Banco.interfaces;
 
 import java.util.*;
 

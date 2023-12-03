@@ -1,4 +1,4 @@
-package Banco;
+package Banco.interfaces;
 
 import java.util.Scanner;
 
@@ -8,11 +8,6 @@ import java.util.Scanner;
 public class Teclado implements Entrada {
 
     private Scanner scanner;
-
-
-    /**
-     * Default constructor
-     */
 
     public Teclado() {
         this.scanner = new Scanner(System.in);

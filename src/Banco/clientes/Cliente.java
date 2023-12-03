@@ -1,6 +1,6 @@
-package Banco;
+package Banco.clientes;
 
-import java.util.*;
+import Banco.cuentas.Cuenta;
 
 /**
  * 

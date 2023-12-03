@@ -1,5 +1,7 @@
 package Banco;
 
+import Banco.clientes.Cliente;
+
 import java.util.*;
 
 /**
