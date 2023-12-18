@@ -2,19 +2,19 @@ package Banco.cuentas;
 
 public abstract class Cuenta {
 
+    private static int cantCuentas = 0;
     private double balance;
     private int numeroCuenta;
 
     //Constructor
-    public Cuenta(double balance, int numeroCuenta) {
+    public Cuenta(double balance) {
         setBalance(balance);
-        setNumeroCuenta(numeroCuenta);
+        setNumeroCuenta(cantCuentas++);
     }
 
     //Constructor
-    public Cuenta(int numeroCuenta) {
+    public Cuenta() {
         this.balance = 0;
-        setNumeroCuenta(numeroCuenta);
     }
 
     //Setters y Getters

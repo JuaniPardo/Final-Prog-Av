@@ -18,10 +18,13 @@ public class ATM {
     private Entrada entrada;
     private Salida salida;
 
+    private Dispenser dispenser;
+
     //Constructor Singleton
     private ATM() {
         setEntrada();
         setSalida();
+        dispenser = new Dispenser();
     }
 
     public static ATM getInstancia() {
