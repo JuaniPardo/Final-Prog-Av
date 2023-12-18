@@ -1,6 +1,7 @@
 package Banco.clientes;
 
 import Banco.cuentas.Cuenta;
+import Banco.cuentas.CuentaCorriente;
 
 /**
  * 
@@ -9,7 +10,7 @@ public class Cliente {
 
     private String nombre;
     private String apellido;
-    private Cuenta[] cuentas;
+    private Cuenta cuenta;
     private String cuit;
 
     public Cliente(String nombre, String apellido, String cuit) {
@@ -26,9 +27,9 @@ public class Cliente {
     public String getApellido() {
         return apellido;
     }
-    public Cuenta[] getCuentas() {
-        return cuentas;
-    }
+    /*public Cuenta getCuenta() {
+        return cuenta;
+    }*/
     public String getCuit() {
         return cuit;
     }
@@ -42,7 +43,7 @@ public class Cliente {
         this.apellido = apellido;
     }
     public void setCuentas() {
-        this.cuentas = new  Cuenta[4];
+        this.cuenta = new CuentaCorriente();
     }
     public void setCuit(String cuit) {
         this.cuit = cuit;

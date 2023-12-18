@@ -2,12 +2,12 @@ package Banco.cuentas;
 
 public class CuentaCorriente extends Cuenta{
 
-    public CuentaCorriente(int balance, int numeroCuenta){
-        super(balance, numeroCuenta);
+    public CuentaCorriente(int balance){
+        super(balance);
     }
 
-    public CuentaCorriente(int numeroCuenta){
-        super(numeroCuenta);
+    public CuentaCorriente(){
+        super();
     }
 
     @Override
