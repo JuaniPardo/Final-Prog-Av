@@ -1,7 +1,7 @@
 package Banco.clientes;
 
 import Banco.cuentas.Cuenta;
-import Banco.cuentas.CuentaCorriente;
+import Banco.cuentas.CajaAhorro;
 
 /**
  * 
@@ -17,7 +17,7 @@ public class Cliente {
         setNombre(nombre);
         setApellido(apellido);
         setCuit(cuit);
-        setCuentas();
+        setCuenta();
     }
 
     //Setters y Getters
@@ -42,9 +42,15 @@ public class Cliente {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-    public void setCuentas() {
-        this.cuenta = new CuentaCorriente();
+
+    public Cuenta getCuenta() {
+        return cuenta;
     }
+
+    public void setCuenta() {
+        this.cuenta = new CajaAhorro();
+    }
+
     public void setCuit(String cuit) {
         this.cuit = cuit;
     }
@@ -64,7 +70,8 @@ public class Cliente {
     @Override
     public String toString() {
         return  getNombreCompleto() + "\n" +
-                "CUIT: " + getCuit();
+                "CUIT: " + getCuit() + "\n" +
+                "Nro de cuenta: "+this.getCuenta().getNumeroCuenta();
     }
 
 }

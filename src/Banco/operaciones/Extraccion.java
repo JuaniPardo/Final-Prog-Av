@@ -23,10 +23,10 @@ public class Extraccion extends Operacion {
     }
 
     public void ejecutar() {
-        ATM.getInstancia().getSalida().mostrarMensaje("Ingrese el monto a extraer: ");
-        monto = ATM.getInstancia().getEntrada().leernumero();
-        getCuenta().extraccion(monto);
-        ATM.getInstancia().getSalida().mostrarMensaje("Su nuevo balance es: " + getCuenta().getBalance());
+//        ATM.getInstancia().getSalida().mostrarMensaje("Ingrese el monto a extraer: ");
+//        monto = ATM.getInstancia().getEntrada().leernumero();
+//        getCuenta().extraccion(monto);
+//        ATM.getInstancia().getSalida().mostrarMensaje("Su nuevo balance es: " + getCuenta().getBalance());
     }
 
 }

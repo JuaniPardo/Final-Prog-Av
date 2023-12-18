@@ -1,6 +1,7 @@
 package Banco;
 
 import Banco.clientes.Cliente;
+import Banco.cuentas.Cuenta;
 
 import java.util.*;
 
@@ -49,8 +50,9 @@ public class Banco {
         this.CUIT = CUIT;
     }
     public void setClientes() {
-        new ArrayList<Cliente>();
+        this.clientes = new ArrayList<Cliente>();
     }
+
 
     //Metodos
 
@@ -61,15 +63,18 @@ public class Banco {
      */
     public void agregarCliente(String nombre, String apellido, String CUIT) {
         Cliente cliente = new Cliente(nombre, apellido, CUIT);
+        System.out.println("Cliente agregado: "+cliente);
+        this.clientes.add(cliente);
     }
 
     public String obtenerClientes() {
         StringBuilder sb = new StringBuilder();
         for (Cliente cliente : clientes) {
-            sb.append(cliente.getNombreCompleto() + "\n");
+            sb.append(cliente.getNombreCompleto()).append("\n");
         }
         return sb.toString();
     }
+
 
     public int obtenerNroClientes() {
         return clientes.size();

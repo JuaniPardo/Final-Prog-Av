@@ -2,19 +2,23 @@ package Banco.cuentas;
 
 public abstract class Cuenta {
 
-    private static int cantCuentas = 0;
+    // EMPIEZA EN 10000 AL SER DE 5 DIGITOS
+    private static int cantCuentas = 10000;
     private double balance;
     private int numeroCuenta;
+    private String nip;
 
     //Constructor
     public Cuenta(double balance) {
+        // el NIP debe ser de 5 digitos
+        setNip("12345");
         setBalance(balance);
         setNumeroCuenta(cantCuentas++);
     }
 
     //Constructor
     public Cuenta() {
-        this.balance = 0;
+        this(0);
     }
 
     //Setters y Getters
@@ -25,6 +29,14 @@ public abstract class Cuenta {
 
     public int getNumeroCuenta() {
         return numeroCuenta;
+    }
+
+    public String getNip() {
+        return nip;
+    }
+
+    public void setNip(String nip) {
+        this.nip = nip;
     }
 
     public void setBalance(double balance) {

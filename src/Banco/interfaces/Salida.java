@@ -11,5 +11,6 @@ public interface Salida {
      * 
      */
     public void mostrarMensaje(String mensaje);
+    public void mostrarDivision();
 
 }

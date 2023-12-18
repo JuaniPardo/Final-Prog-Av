@@ -12,7 +12,7 @@ public class Teclado implements Entrada {
 
 
     @Override
-    public int leernumero() {
-        return scanner.nextInt();
+    public String leer() {
+        return scanner.next();
     }
 }
