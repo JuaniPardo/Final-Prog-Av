@@ -6,7 +6,6 @@ import Banco.cuentas.Cuenta;
 public class Extraccion extends Operacion {
 
     private Cuenta cuenta;
-    private double monto;
 
     //Constructor
     public Extraccion(Cuenta cuenta) {
@@ -25,8 +24,8 @@ public class Extraccion extends Operacion {
 
     public void ejecutar() {
         ATM.getInstancia().getSalida().mostrarMensaje("Ingrese el monto a extraer: ");
-        monto = ATM.getInstancia().getEntrada().leerNumero();
-        getCuenta().extraccion(monto);
+        double monto = ATM.getInstancia().getEntrada().leerNumero();
+        ATM.getInstancia().getDispenser().extraccion(monto, getCuenta());
         ATM.getInstancia().getSalida().mostrarMensaje("Su nuevo balance es: " + getCuenta().getBalance());
     }
 

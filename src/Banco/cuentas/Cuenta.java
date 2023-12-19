@@ -55,7 +55,7 @@ public abstract class Cuenta {
 
     public abstract void deposito(double monto);
 
-    public abstract void extraccion(double monto);
+    public abstract boolean extraccion(double monto);
 
     public double consultaSaldo() {
         return getBalance();

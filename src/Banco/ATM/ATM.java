@@ -1,7 +1,6 @@
 package Banco.ATM;
 
 import Banco.Banco;
-import Banco.cuentas.Cuenta;
 import Banco.interfaces.Entrada;
 import Banco.interfaces.Pantalla;
 import Banco.interfaces.Salida;
@@ -12,8 +11,6 @@ import Banco.operaciones.Extraccion;
 import Banco.operaciones.Operacion;
 import Banco.clientes.Cliente;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -27,11 +24,13 @@ public class ATM {
     private Salida salida;
     private Dispenser dispenser;
     private Banco banco;
+    private Autenticador autenticador;
 
     //Constructor Singleton
     private ATM() {
         setEntrada();
         setSalida();
+        autenticador = new Autenticador();
         dispenser = new Dispenser();
     }
 
@@ -64,6 +63,11 @@ public class ATM {
     public void setBanco(Banco banco) {
         this.banco = banco;
     }
+    public Dispenser getDispenser() {
+        return dispenser;
+    }
+
+    //Metodos
     public void ejecutarOperacion(Operacion operacion) {
         operacion.ejecutar();
     }
@@ -107,6 +111,7 @@ public class ATM {
         this.salida.mostrarMensaje("[2] Retirar efectivo");
         this.salida.mostrarMensaje("[3] Realizar depósito");
         this.salida.mostrarMensaje("[4] Salir");
+        this.salida.mostrarMensaje("(Billetes = " + this.dispenser.getBilletes() + ")");
         this.salida.mostrarDivision();
         this.salida.mostrarMensaje("Ingrese su opcion: ");
         try {
@@ -140,74 +145,46 @@ public class ATM {
     }
 
     public void mostrarIniciarSesion() {
-        String regex = "^[0-9]{5}$";
-        Pattern pattern = Pattern.compile(regex);
-        this.salida.mostrarDivision();
-        this.salida.mostrarMensaje("INGRESAR A MI CUENTA");
-        String numeroCuenta = "";
-        Matcher matcher = pattern.matcher(numeroCuenta);
-        while (!matcher.hasMatch()) {
-            this.salida.mostrarDivision();
-            this.salida.mostrarMensaje("Ingrese su numero de cuenta: ");
-            numeroCuenta = this.entrada.leerTexto();
-            matcher = pattern.matcher(numeroCuenta);
-            if (!matcher.find()) {
-                this.salida.mostrarDivision();
-                this.salida.mostrarMensaje("""
-                        Por favor ingrese un numero
-                        de cuenta de cinco digitos
-                        valido.""");
-                numeroCuenta = "";
-            }
-        }
-        String nip = "";
-        matcher = pattern.matcher(nip);
-        while (!matcher.hasMatch()) {
-            this.salida.mostrarDivision();
-            this.salida.mostrarMensaje("Ingrese su numero\nde identificacion personal: ");
-            nip = this.entrada.leerTexto();
-            matcher = pattern.matcher(nip);
-            if (!matcher.find()) {
-                this.salida.mostrarDivision();
-                this.salida.mostrarMensaje("""
-                        Por favor ingrese un numero
-                        de identificacion personal
-                        de cinco digitos valido.""");
-                nip = "";
-            }
-        }
+        clienteAutenticado = autenticador.autenticarCliente(banco, entrada, salida);
 
-        for (Cliente cliente : this.banco.getClientes()) {
-
-            Cuenta cuenta = cliente.getCuenta();
-            if (cuenta.getNumeroCuenta() == Integer.parseInt(numeroCuenta)
-                    && cuenta.getNip().equals(nip)) {
-                this.clienteAutenticado = cliente;
-                break;
-            }
-
-        }
         if (clienteAutenticado == null) {
-            this.salida.mostrarDivision();
-            this.salida.mostrarMensaje("Número de cuenta o NIP incorrecto. Por favor, inténtelo nuevamente.");
-            this.salida.mostrarDivision();
+            salida.mostrarDivision();
+            salida.mostrarMensaje("Número de cuenta o NIP incorrecto. Por favor, inténtelo nuevamente.");
+            salida.mostrarDivision();
         }
-
     }
 
     public void consultarSaldo() {
-        Operacion consultarSaldo = new ConsultaSaldo(this.clienteAutenticado.getCuenta());
-        this.ejecutarOperacion(consultarSaldo);
+        if (this.clienteAutenticado != null) {
+            Operacion consultarSaldo = new ConsultaSaldo(this.clienteAutenticado.getCuenta());
+            this.ejecutarOperacion(consultarSaldo);
+        } else {
+            this.salida.mostrarDivision();
+            this.salida.mostrarMensaje("Por favor inicie sesión para realizar esta operación.");
+            this.salida.mostrarDivision();
+        }
     }
 
     public void retirarEfectivo() {
-        Operacion retirarEfectivo = new Extraccion(this.clienteAutenticado.getCuenta());
-        this.ejecutarOperacion(retirarEfectivo);
+        if (this.clienteAutenticado != null) {
+            Operacion retirarEfectivo = new Extraccion(this.clienteAutenticado.getCuenta());
+            this.ejecutarOperacion(retirarEfectivo);
+        } else {
+            this.salida.mostrarDivision();
+            this.salida.mostrarMensaje("Por favor inicie sesión para realizar esta operación.");
+            this.salida.mostrarDivision();
+        }
     }
 
     public void realizarDeposito() {
-        Operacion realizarDeposito = new Deposito(this.clienteAutenticado.getCuenta());
-        this.ejecutarOperacion(realizarDeposito);
+        if (this.clienteAutenticado != null) {
+            Operacion realizarDeposito = new Deposito(this.clienteAutenticado.getCuenta());
+            this.ejecutarOperacion(realizarDeposito);
+        } else {
+            this.salida.mostrarDivision();
+            this.salida.mostrarMensaje("Por favor inicie sesión para realizar esta operación.");
+            this.salida.mostrarDivision();
+        }
     }
 
     @Override

@@ -18,10 +18,12 @@ public class CajaAhorro extends Cuenta{
     }
 
     @Override
-    public void extraccion(double monto) {
+    public boolean extraccion(double monto) {
         if (getBalance() >= monto){
             setBalance(getBalance() - monto);
+            return true;
         }
+        return false;
     }
 
 
