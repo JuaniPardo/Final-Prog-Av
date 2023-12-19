@@ -5,6 +5,7 @@ import Banco.interfaces.Entrada;
 import Banco.interfaces.Pantalla;
 import Banco.interfaces.Salida;
 import Banco.interfaces.Teclado;
+import Banco.operaciones.CambiarPIN;
 import Banco.operaciones.ConsultaSaldo;
 import Banco.operaciones.Deposito;
 import Banco.operaciones.Extraccion;
@@ -13,10 +14,28 @@ import Banco.clientes.Cliente;
 
 
 /**
+ * La clase {@code ATM} representa un cajero automático que interactúa con un banco
+ * para realizar operaciones bancarias. Es un componente central que gestiona la autenticación
+ * de clientes, las operaciones financieras y la interacción con el usuario a través de la entrada
+ * y salida configuradas.
  *
+ * <p>Esta clase sigue el patrón de diseño Singleton, asegurando que solo haya una instancia de
+ * {@code ATM} en la aplicación.</p>
+ *
+ * <p>Para utilizar el cajero automático, se debe obtener la instancia mediante el método
+ * {@code getInstancia()} y luego se pueden realizar diversas operaciones llamando a los métodos
+ * proporcionados.</p>
+ *
+ * @see Cliente
+ * @see Banco
+ * @see Operacion
+ * @see Entrada
+ * @see Salida
+ * @see Teclado
+ * @see Pantalla
+ * @see Dispenser
  */
 public class ATM {
-
 
     public static final ATM instancia = new ATM();
     private Cliente clienteAutenticado;
@@ -68,11 +87,30 @@ public class ATM {
     }
 
     //Metodos
+    /**
+     * Ejecuta una operación bancaria dada. Si el cliente está autenticado, la operación se realiza,
+     * de lo contrario, se muestra un mensaje indicando que se debe iniciar sesión para realizar la operación.
+     *
+     * @param operacion La operación bancaria a ejecutar.
+     * @see Operacion
+     */
     public void ejecutarOperacion(Operacion operacion) {
-        operacion.ejecutar();
+        if (this.clienteAutenticado != null) {
+            operacion.ejecutar();
+            operacion.menuPostOperacion();
+        } else {
+            this.salida.mostrarDivision();
+            this.salida.mostrarMensaje("Por favor inicie sesión para realizar esta operación.");
+            this.salida.mostrarDivision();
+        }
     }
 
-    //Metodos
+    /**
+     * Muestra el menú de bienvenida en la pantalla, permitiendo al usuario elegir entre ingresar a su cuenta
+     * o salir del cajero automático.
+     *
+     * @return La opción seleccionada por el usuario.
+     */
     public int mostrarMenuBienvenida() {
         String mensajeBienvenida = "BIENVENIDO AL CAJERO ATM";
         int opcion = 0;
@@ -97,7 +135,13 @@ public class ATM {
         return opcion;
     }
 
-    public int mostrarMenuOperaciones() {
+    /**
+     * Muestra el menú de operaciones disponibles después de que el cliente ha iniciado sesión.
+     * Presenta opciones como consultar saldo, retirar efectivo, realizar depósito o salir.
+     *
+     * @return La opción seleccionada por el usuario.
+     */
+    public void mostrarMenuOperaciones() {
         String mensajeBienvenida = "HOLA "
                 + clienteAutenticado.getNombre()
                 + " "
@@ -107,17 +151,18 @@ public class ATM {
         this.salida.mostrarDivision();
         this.salida.mostrarMensaje(mensajeBienvenida);
         this.salida.mostrarDivision();
+        this.salida.mostrarMensaje("(MODO DEV - Billetes = " + this.dispenser.getBilletes() + " - MODO DEV)");
         this.salida.mostrarMensaje("[1] Consultar saldo");
         this.salida.mostrarMensaje("[2] Retirar efectivo");
         this.salida.mostrarMensaje("[3] Realizar depósito");
-        this.salida.mostrarMensaje("[4] Salir");
-        this.salida.mostrarMensaje("(Billetes = " + this.dispenser.getBilletes() + ")");
+        this.salida.mostrarMensaje("[4] Cambiar PIN");
+        this.salida.mostrarMensaje("[0] Salir");
         this.salida.mostrarDivision();
         this.salida.mostrarMensaje("Ingrese su opcion: ");
         try {
             opcion = Integer.parseInt(this.entrada.leerTexto());
-            if (opcion < 1 || opcion > 4) {
-                opcion = 0;
+            if (opcion < 0 || opcion > 4) {
+                opcion = -1;
                 throw new Exception();
             }
 
@@ -132,6 +177,9 @@ public class ATM {
                     realizarDeposito();
                     break;
                 case 4:
+                    cambiarPin();
+                    break;
+                case 0:
                     this.setClienteAutenticado(null);
                     break;
             }
@@ -141,9 +189,13 @@ public class ATM {
             this.salida.mostrarMensaje("Por favor ingrese\n un valor valido (Ej=1)");
             this.salida.mostrarDivision();
         }
-        return opcion;
     }
 
+    /**
+     * Muestra el proceso de inicio de sesión, autenticando al cliente con el banco.
+     * Si la autenticación es exitosa, el cliente queda autenticado para realizar operaciones,
+     * de lo contrario, se muestra un mensaje de error.
+     */
     public void mostrarIniciarSesion() {
         clienteAutenticado = autenticador.autenticarCliente(banco, entrada, salida);
 
@@ -155,36 +207,19 @@ public class ATM {
     }
 
     public void consultarSaldo() {
-        if (this.clienteAutenticado != null) {
-            Operacion consultarSaldo = new ConsultaSaldo(this.clienteAutenticado.getCuenta());
-            this.ejecutarOperacion(consultarSaldo);
-        } else {
-            this.salida.mostrarDivision();
-            this.salida.mostrarMensaje("Por favor inicie sesión para realizar esta operación.");
-            this.salida.mostrarDivision();
-        }
+        this.ejecutarOperacion(new ConsultaSaldo(this.clienteAutenticado.getCuenta()));
     }
 
     public void retirarEfectivo() {
-        if (this.clienteAutenticado != null) {
-            Operacion retirarEfectivo = new Extraccion(this.clienteAutenticado.getCuenta());
-            this.ejecutarOperacion(retirarEfectivo);
-        } else {
-            this.salida.mostrarDivision();
-            this.salida.mostrarMensaje("Por favor inicie sesión para realizar esta operación.");
-            this.salida.mostrarDivision();
-        }
+        this.ejecutarOperacion(new Extraccion(this.clienteAutenticado.getCuenta()));
     }
 
     public void realizarDeposito() {
-        if (this.clienteAutenticado != null) {
-            Operacion realizarDeposito = new Deposito(this.clienteAutenticado.getCuenta());
-            this.ejecutarOperacion(realizarDeposito);
-        } else {
-            this.salida.mostrarDivision();
-            this.salida.mostrarMensaje("Por favor inicie sesión para realizar esta operación.");
-            this.salida.mostrarDivision();
-        }
+        this.ejecutarOperacion(new Deposito(this.clienteAutenticado.getCuenta()));
+    }
+
+    public void cambiarPin() {
+        this.ejecutarOperacion(new CambiarPIN(this.clienteAutenticado.getCuenta()));
     }
 
     @Override

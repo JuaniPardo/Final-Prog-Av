@@ -4,7 +4,7 @@ import Banco.cuentas.Cuenta;
 import Banco.cuentas.CajaAhorro;
 
 /**
- * 
+ *
  */
 public class Cliente {
 
@@ -13,6 +13,7 @@ public class Cliente {
     private Cuenta cuenta;
     private String cuit;
 
+    //Constructor
     public Cliente(String nombre, String apellido, String cuit) {
         setNombre(nombre);
         setApellido(apellido);
@@ -53,9 +54,8 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return  getNombreCompleto() + "\n" +
+        return getNombreCompleto() + "\n" +
                 "CUIT: " + getCuit() + "\n" +
-                "Nro de cuenta: "+this.getCuenta().getNumeroCuenta();
+                String.format("Nro de cuenta: %05d", this.getCuenta().getNumeroCuenta());
     }
-
 }

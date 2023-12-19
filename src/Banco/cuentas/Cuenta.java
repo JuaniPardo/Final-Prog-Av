@@ -30,23 +30,18 @@ public abstract class Cuenta {
     public double getBalance() {
         return balance;
     }
-
     public int getNumeroCuenta() {
         return numeroCuenta;
     }
-
     public String getNip() {
         return nip;
     }
-
     public void setNip(String nip) {
         this.nip = nip;
     }
-
     public void setBalance(double balance) {
         this.balance = balance;
     }
-
     public void setNumeroCuenta(int numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
     }

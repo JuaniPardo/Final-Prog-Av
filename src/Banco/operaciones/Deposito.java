@@ -5,29 +5,35 @@ import Banco.cuentas.Cuenta;
 
 public class Deposito extends Operacion {
 
-    private Cuenta cuenta;
-    private double monto;
-
-    //Constructor
+    /**
+     * Constructor que inicializa la operación de depósito con la cuenta especificada.
+     *
+     * @param cuenta La cuenta en la que se realizará el depósito.
+     */
     public Deposito(Cuenta cuenta) {
-        super();
-        setCuenta(cuenta);
+        super(cuenta);
     }
 
-    //Setters and Getters
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
-    }
-
-    public Cuenta getCuenta() {
-        return this.cuenta;
-    }
-
+    /**
+     * Ejecuta la operación de depósito, utilizando el lector de billetes para obtener el monto y
+     * actualizando el saldo de la cuenta.
+     */
     public void ejecutar() {
-        //obtener monto y sumarlo al balance de la cuenta
-        ATM.getInstancia().getSalida().mostrarMensaje("Ingrese el monto a depositar: ");
-        monto = ATM.getInstancia().getEntrada().leerNumero();
+        // Simulación: Obtener el monto del lector de billetes
+        ATM.getInstancia().getSalida().mostrarMensaje("Ingrese billetes en el lector.");
+        double monto = obtenerMontoDelLectorDeBilletes();
         getCuenta().deposito(monto);
         ATM.getInstancia().getSalida().mostrarMensaje("Su nuevo balance es: " + getCuenta().getBalance());
+    }
+
+    /**
+     * Simulación: Obtener el monto del lector de billetes.
+     *
+     * @return El monto obtenido del lector de billetes.
+     */
+    private double obtenerMontoDelLectorDeBilletes() {
+        ATM.getInstancia().getSalida().mostrarMensaje("(MODO DEV - Ingrese el monto a depositar - MODO DEV): ");
+
+        return ATM.getInstancia().getEntrada().leerNumero();
     }
 }
