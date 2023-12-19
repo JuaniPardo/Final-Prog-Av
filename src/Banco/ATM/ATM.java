@@ -6,6 +6,9 @@ import Banco.interfaces.Entrada;
 import Banco.interfaces.Pantalla;
 import Banco.interfaces.Salida;
 import Banco.interfaces.Teclado;
+import Banco.operaciones.ConsultaSaldo;
+import Banco.operaciones.Deposito;
+import Banco.operaciones.Extraccion;
 import Banco.operaciones.Operacion;
 import Banco.clientes.Cliente;
 
@@ -37,44 +40,35 @@ public class ATM {
     }
 
     //Setters y Getters
-
-
     public Cliente getClienteAutenticado() {
         return clienteAutenticado;
     }
-
     public void setClienteAutenticado(Cliente clienteAutenticado) {
         this.clienteAutenticado = clienteAutenticado;
     }
-
     public Entrada getEntrada() {
         return entrada;
     }
-
     public Salida getSalida() {
         return salida;
     }
-
     public void setEntrada() {
         this.entrada = new Teclado();
     }
-
     public void setSalida() {
         this.salida = new Pantalla();
     }
-
     public Banco getBanco() {
         return banco;
     }
-
     public void setBanco(Banco banco) {
         this.banco = banco;
     }
-
     public void ejecutarOperacion(Operacion operacion) {
         operacion.ejecutar();
     }
 
+    //Metodos
     public int mostrarMenuBienvenida() {
         String mensajeBienvenida = "BIENVENIDO AL CAJERO ATM";
         int opcion = 0;
@@ -86,7 +80,7 @@ public class ATM {
         this.salida.mostrarDivision();
         this.salida.mostrarMensaje("Ingrese su opcion: ");
         try {
-            opcion = Integer.parseInt(this.entrada.leer());
+            opcion = Integer.parseInt(this.entrada.leerTexto());
             if (opcion != 1 && opcion != 2) {
                 opcion = 0;
                 throw new Exception();
@@ -116,7 +110,7 @@ public class ATM {
         this.salida.mostrarDivision();
         this.salida.mostrarMensaje("Ingrese su opcion: ");
         try {
-            opcion = Integer.parseInt(this.entrada.leer());
+            opcion = Integer.parseInt(this.entrada.leerTexto());
             if (opcion < 1 || opcion > 4) {
                 opcion = 0;
                 throw new Exception();
@@ -124,8 +118,14 @@ public class ATM {
 
             switch (opcion) {
                 case 1:
+                    consultarSaldo();
+                    break;
                 case 2:
+                    retirarEfectivo();
+                    break;
                 case 3:
+                    realizarDeposito();
+                    break;
                 case 4:
                     this.setClienteAutenticado(null);
                     break;
@@ -149,7 +149,7 @@ public class ATM {
         while (!matcher.hasMatch()) {
             this.salida.mostrarDivision();
             this.salida.mostrarMensaje("Ingrese su numero de cuenta: ");
-            numeroCuenta = this.entrada.leer();
+            numeroCuenta = this.entrada.leerTexto();
             matcher = pattern.matcher(numeroCuenta);
             if (!matcher.find()) {
                 this.salida.mostrarDivision();
@@ -162,10 +162,10 @@ public class ATM {
         }
         String nip = "";
         matcher = pattern.matcher(nip);
-        while(!matcher.hasMatch()) {
+        while (!matcher.hasMatch()) {
             this.salida.mostrarDivision();
             this.salida.mostrarMensaje("Ingrese su numero\nde identificacion personal: ");
-            nip = this.entrada.leer();
+            nip = this.entrada.leerTexto();
             matcher = pattern.matcher(nip);
             if (!matcher.find()) {
                 this.salida.mostrarDivision();
@@ -187,7 +187,27 @@ public class ATM {
             }
 
         }
+        if (clienteAutenticado == null) {
+            this.salida.mostrarDivision();
+            this.salida.mostrarMensaje("Número de cuenta o NIP incorrecto. Por favor, inténtelo nuevamente.");
+            this.salida.mostrarDivision();
+        }
 
+    }
+
+    public void consultarSaldo() {
+        Operacion consultarSaldo = new ConsultaSaldo(this.clienteAutenticado.getCuenta());
+        this.ejecutarOperacion(consultarSaldo);
+    }
+
+    public void retirarEfectivo() {
+        Operacion retirarEfectivo = new Extraccion(this.clienteAutenticado.getCuenta());
+        this.ejecutarOperacion(retirarEfectivo);
+    }
+
+    public void realizarDeposito() {
+        Operacion realizarDeposito = new Deposito(this.clienteAutenticado.getCuenta());
+        this.ejecutarOperacion(realizarDeposito);
     }
 
     @Override

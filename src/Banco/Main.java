@@ -30,6 +30,9 @@ public class Main {
     public static void cargarClientes(Banco banco) {
         banco.agregarCliente("Lucas", "Caraballo", "20-4538075-8");
         banco.agregarCliente("Juan Ignacio", "Pardo", "25-3028512-5");
+        banco.agregarCliente("Martin", "Rios", "20-4538075-8");
+        banco.agregarCliente("Juan", "Perez", "20-4538075-8");
+        banco.agregarCliente("Pedro", "Gomez", "20-4538075-8");
     }
 
 }

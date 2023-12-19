@@ -7,6 +7,7 @@ public class ConsultaSaldo extends Operacion {
 
     private Cuenta cuenta;
     public ConsultaSaldo(Cuenta cuenta) {
+        super();
         setCuenta(cuenta);
     }
 
@@ -14,7 +15,6 @@ public class ConsultaSaldo extends Operacion {
     public void setCuenta(Cuenta cuenta) {
         this.cuenta = cuenta;
     }
-
     public Cuenta getCuenta() {
         return this.cuenta;
     }

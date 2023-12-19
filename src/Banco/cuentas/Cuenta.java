@@ -2,8 +2,12 @@ package Banco.cuentas;
 
 public abstract class Cuenta {
 
-    // EMPIEZA EN 10000 AL SER DE 5 DIGITOS
-    private static int cantCuentas = 10000;
+    /** El PIN debe ser de 5 digitos.
+     * Es un String y la validación se maneja con un try-catch que compara con una regex.
+     * No hay problema con que empiece en 0, ya que no se maneja como un número.
+     * Si yo escribo "00000" no es lo mismo que "0".
+     */
+    private static int cantCuentas = 0;
     private double balance;
     private int numeroCuenta;
     private String nip;

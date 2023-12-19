@@ -3,6 +3,8 @@ package Banco.interfaces;
 
 public interface Entrada {
 
-    public String leer();
+    public String leerTexto();
+
+    public int leerNumero();
 
 }

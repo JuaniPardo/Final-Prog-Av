@@ -18,7 +18,7 @@ public class Dispenser {
             if (monto <= this.efectivo()) {
                 int billetesExtraccion = monto / 20;
                 billetes -= billetesExtraccion;
-                //TODO: mostar saldo
+                //TODO: mostrar saldo
             } else {
 
             }

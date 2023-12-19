@@ -10,6 +10,7 @@ public class Deposito extends Operacion {
 
     //Constructor
     public Deposito(Cuenta cuenta) {
+        super();
         setCuenta(cuenta);
     }
 
@@ -24,9 +25,9 @@ public class Deposito extends Operacion {
 
     public void ejecutar() {
         //obtener monto y sumarlo al balance de la cuenta
-//        ATM.getInstancia().getSalida().mostrarMensaje("Ingrese el monto a depositar: ");
-//        monto = ATM.getInstancia().getEntrada().leernumero();
-//        getCuenta().deposito(monto);
-//        ATM.getInstancia().getSalida().mostrarMensaje("Su nuevo balance es: " + getCuenta().getBalance());
+        ATM.getInstancia().getSalida().mostrarMensaje("Ingrese el monto a depositar: ");
+        monto = ATM.getInstancia().getEntrada().leerNumero();
+        getCuenta().deposito(monto);
+        ATM.getInstancia().getSalida().mostrarMensaje("Su nuevo balance es: " + getCuenta().getBalance());
     }
 }

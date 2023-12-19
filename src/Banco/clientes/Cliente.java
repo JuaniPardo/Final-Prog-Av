@@ -27,9 +27,6 @@ public class Cliente {
     public String getApellido() {
         return apellido;
     }
-    /*public Cuenta getCuenta() {
-        return cuenta;
-    }*/
     public String getCuit() {
         return cuit;
     }
@@ -42,30 +39,17 @@ public class Cliente {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-
     public Cuenta getCuenta() {
         return cuenta;
     }
-
     public void setCuenta() {
         this.cuenta = new CajaAhorro();
     }
-
     public void setCuit(String cuit) {
         this.cuit = cuit;
     }
 
     //Metodos
-    public void agregarCuenta() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void obtenerCuenta() {
-        // TODO implement here
-    }
 
     @Override
     public String toString() {
